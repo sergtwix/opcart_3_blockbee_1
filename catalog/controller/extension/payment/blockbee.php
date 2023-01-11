@@ -101,20 +101,21 @@ class ControllerExtensionPaymentBlockBee extends Controller
                 $minTx = floatval($info->minimum_transaction_coin);
 
                 $cryptoTotal = BlockBeeHelper::get_conversion($order_info['currency_code'], $selected, $total, $disable_conversion, $apiKey);
+                $callbackUrl = $this->url->link('extension/payment/blockbee/callback', 'order_id=' . $this->session->data['order_id'] . '&nonce=' . $nonce, true);
+                $callbackUrl = str_replace('&amp;', '&', $callbackUrl);
+
                 $helper = new BlockBeeHelper($selected, $apiKey, $callbackUrl, [], true);
                 $addressOut = $helper->get_address_out();
 
                 if (!isset($addressOut)) {
                     $err_coin = $this->language->get('erro_adress');
-                }
-                if (($cryptoTotal < $minTx)) {
-                    $err_coin = $this->language->get('value_minim') . ' ' . $minTx . ' ' . strtoupper($selected);
+                } else {
+                    if (($cryptoTotal < $minTx)) {
+                        $err_coin = $this->language->get('value_minim') . ' ' . $minTx . ' ' . strtoupper($selected);
+                    }
                 }
 
                 if (empty($err_coin)) {
-
-                    $callbackUrl = $this->url->link('extension/payment/blockbee/callback', 'order_id=' . $this->session->data['order_id'] . '&nonce=' . $nonce, true);
-                    $callbackUrl = str_replace('&amp;', '&', $callbackUrl);
 
                     $addressIn = $helper->get_address();
                     $qrCodeDataValue = $helper->get_qrcode($cryptoTotal, $qr_code_size);
