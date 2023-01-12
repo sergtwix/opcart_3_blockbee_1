@@ -56,41 +56,6 @@ class BlockBeeHelper
         return null;
     }
 
-    public function get_address_out()
-    {
-
-        if (empty($this->coin) || empty($this->callback_url)) {
-            return null;
-        }
-
-        $api_key = $this->api_key;
-
-        if (empty($api_key)) {
-            return null;
-        }
-
-        $callback_url = $this->callback_url;
-        if (!empty($this->parameters)) {
-            $req_parameters = http_build_query($this->parameters);
-            $callback_url = "{$this->callback_url}?{$req_parameters}";
-        }
-        $bb_params = [
-            'apikey' => $api_key,
-            'callback' => $callback_url,
-            'pending' => $this->pending,
-            'convert' => 1,
-        ];
-
-        $response = BlockBeeHelper::_request($this->coin, 'create', $bb_params);
-
-        if ($response->status == 'success') {
-            $this->payment_address = $response->address_out;
-
-            return $response->address_out;
-        }
-
-        return null;
-    }
 
     public function checklogs()
     {

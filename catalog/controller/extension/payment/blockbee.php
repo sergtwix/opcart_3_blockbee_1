@@ -79,13 +79,13 @@ class ControllerExtensionPaymentBlockBee extends Controller
             $currency = $this->session->data['currency'];
 
             if (empty($this->request->post['blockbee_coin'])) {
-                $err_coin = $this->language->get('erro_coin');
+                $err_coin = $this->language->get('error_coin');
             } else {
                 $selected = $this->request->post['blockbee_coin'];
                 $apiKey = $this->config->get('payment_blockbee_api_key');
-                if (empty($apiKey)) {
-                    $err_coin = $this->language->get('erro_apikey');
-                }
+                // if (empty($apiKey)) {
+                //     $err_coin = $this->language->get('error_apikey');
+                // }
             }
 
             if (empty($err_coin) && !empty($apiKey)) {
@@ -105,10 +105,10 @@ class ControllerExtensionPaymentBlockBee extends Controller
                 $callbackUrl = str_replace('&amp;', '&', $callbackUrl);
 
                 $helper = new BlockBeeHelper($selected, $apiKey, $callbackUrl, [], true);
-                $addressOut = $helper->get_address_out();
+                $addressIn = $helper->get_address();
 
-                if (!isset($addressOut)) {
-                    $err_coin = $this->language->get('erro_adress');
+                if (!isset($addressIn)) {
+                    $err_coin = $this->language->get('error_adress');
                 } else {
                     if (($cryptoTotal < $minTx)) {
                         $err_coin = $this->language->get('value_minim') . ' ' . $minTx . ' ' . strtoupper($selected);
@@ -117,7 +117,7 @@ class ControllerExtensionPaymentBlockBee extends Controller
 
                 if (empty($err_coin)) {
 
-                    $addressIn = $helper->get_address();
+
                     $qrCodeDataValue = $helper->get_qrcode($cryptoTotal, $qr_code_size);
                     $qrCodeData = $helper->get_qrcode('', $qr_code_size);
                     $paymentURL = $this->url->link('extension/payment/blockbee/pay', 'order_id=' . $this->session->data['order_id'] . 'nonce=' . $nonce, true);
