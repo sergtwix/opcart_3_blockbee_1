@@ -7,7 +7,8 @@ Accept cryptocurrency payments on your OpenCart store
 ### Requirements:
 
 ```
-3.0 <= OpenCart < 4.0
+OpenCart >= 3.0
+OpenCart < 4.0
 
 ```
 
