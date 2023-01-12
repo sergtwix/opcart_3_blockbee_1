@@ -83,9 +83,9 @@ class ControllerExtensionPaymentBlockBee extends Controller
             } else {
                 $selected = $this->request->post['blockbee_coin'];
                 $apiKey = $this->config->get('payment_blockbee_api_key');
-                // if (empty($apiKey)) {
-                //     $err_coin = $this->language->get('error_apikey');
-                // }
+                if (empty($apiKey)) {
+                    $err_coin = $this->language->get('error_apikey');
+                }
             }
 
             if (empty($err_coin) && !empty($apiKey)) {
