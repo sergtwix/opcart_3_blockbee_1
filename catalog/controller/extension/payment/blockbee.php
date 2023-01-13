@@ -47,7 +47,7 @@ class ControllerExtensionPaymentBlockBee extends Controller
             }
 
             if ($blockchain_fee) {
-                $blockbeeFee += floatval(BlockBeeHelper::get_estimate($_POST["blockbee_coin"])->$currency);
+                $blockbeeFee += floatval(BlockBeeHelper::get_estimate($_POST["blockbee_coin"])->$currency, $apiKey);
             }
         }
 
