@@ -117,7 +117,6 @@ class ControllerExtensionPaymentBlockBee extends Controller
 
                 if (empty($err_coin)) {
 
-
                     $qrCodeDataValue = $helper->get_qrcode($cryptoTotal, $qr_code_size);
                     $qrCodeData = $helper->get_qrcode('', $qr_code_size);
                     $paymentURL = $this->url->link('extension/payment/blockbee/pay', 'order_id=' . $this->session->data['order_id'] . 'nonce=' . $nonce, true);
