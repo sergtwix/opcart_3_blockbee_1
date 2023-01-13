@@ -508,6 +508,8 @@ class ControllerExtensionPaymentBlockBee extends Controller
             die("*ok*");
         }
 
+        $apiKey = $this->config->get('payment_blockbee_api_key');
+
         $disable_conversion = $this->config->get('payment_blockbee_disable_conversion');
 
         $qrcode_size = $this->config->get('payment_blockbee_qrcode_size');
